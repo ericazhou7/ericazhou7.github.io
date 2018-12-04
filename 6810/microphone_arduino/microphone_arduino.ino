@@ -4,9 +4,11 @@ int micPin = 0;
 int dirPin = 2;
 int stepPin = 3;
 int servoPin = 8;
-float minVolt = 0.6;
-float maxVolt = 1.7;
-float motorThreshold = 0.2;
+float minVolt = 0.5;
+float maxVolt = 0.9;
+float stepperThreshold = 0.0;
+double volts;
+double oldVolts;
 
 const int sampleWindow = 1000; // Sample window width in mS (50 mS = 20Hz)
 unsigned int sample;
@@ -38,15 +40,30 @@ void loop() {
       }
     }
     peakToPeak = signalMax - signalMin; // max - min = peak-peak amplitude
-    double volts = (peakToPeak * 5.0) / 1024; // convert to volts
+    volts = (peakToPeak * 5.0) / 25; // convert to volts
+    if (oldVolts == NULL) {
+      oldVolts = volts;
+    }
+    
+    boolean isLouderThanBefore = (oldVolts - volts) > 0;
+    boolean notSilent = volts > 0.05;
     Serial.print(volts);
-    if ((volts - maxVolt) > motorThreshold or (minVolt - volts) > motorThreshold) {
-        if ((volts - maxVolt) > motorThreshold) {
+    
+    if ((volts - maxVolt) > stepperThreshold or ((minVolt - volts) > stepperThreshold) && notSilent) {
+        if ((volts - maxVolt) > stepperThreshold) { //also need to be checking the difference between the old reading and new one
             Serial.println(" TOO TOO LOUD");
-            digitalWrite(dirPin, HIGH);     
+            if (isLouderThanBefore) { //if louder than before AND still too loud, need to move in opposite direction
+              digitalWrite(dirPin, LOW);
+            } else {  //if softer than before AND too loud, getting closer! move in same direction
+              digitalWrite(dirPin, HIGH); 
+            }    
          } else {
             Serial.println(" TOO TOO SOFT");
-            digitalWrite(dirPin, LOW);   
+            if (isLouderThanBefore) { //if louder than before AND too soft, getting closer! move in same direction
+              digitalWrite(dirPin, LOW);
+            } else {  //if softer than before AND still too soft, need to move in opposite direction
+              digitalWrite(dirPin, LOW);
+            }
         } 
         delay(100);
         for (int i = 0; i < 1024; i++) {   
@@ -65,4 +82,5 @@ void loop() {
     } else {
       Serial.println("VOLUME IN RANGE");
     }
+    oldVolts = volts;
 }
