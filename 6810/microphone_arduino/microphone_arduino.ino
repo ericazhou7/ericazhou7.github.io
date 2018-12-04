@@ -3,23 +3,24 @@
 int micPin = 0;
 int dirPin = 2;
 int stepPin = 3;
-int servoPin = 8;
-float minVolt = 0.5;
-float maxVolt = 0.9;
-float stepperThreshold = 0.0;
-double volts;
-double oldVolts;
+int servoPin = 5;
+float minVolt = 0.6;
+float maxVolt = 1.7;
+float motorThreshold = 0.2;
 
 const int sampleWindow = 1000; // Sample window width in mS (50 mS = 20Hz)
 unsigned int sample;
 
-Servo myservo; 
-int servoPos = 0;
+Servo servo; 
+int servoAngle = 155;
+int servoMin = 110;
+int servoMax = 155;
 
 void setup() {
   pinMode(dirPin, OUTPUT);
   pinMode(stepPin, OUTPUT);
-  myservo.attach(servoPin); 
+  servo.attach(servoPin); 
+  servo.write(servoMax);
   Serial.begin(9600);
 }
 
@@ -40,33 +41,18 @@ void loop() {
       }
     }
     peakToPeak = signalMax - signalMin; // max - min = peak-peak amplitude
-    volts = (peakToPeak * 5.0) / 25; // convert to volts
-    if (oldVolts == NULL) {
-      oldVolts = volts;
-    }
-    
-    boolean isLouderThanBefore = (oldVolts - volts) > 0;
-    boolean notSilent = volts > 0.05;
+    double volts = (peakToPeak * 5.0) / 1024; // convert to volts
     Serial.print(volts);
-    
-    if ((volts - maxVolt) > stepperThreshold or ((minVolt - volts) > stepperThreshold) && notSilent) {
-        if ((volts - maxVolt) > stepperThreshold) { //also need to be checking the difference between the old reading and new one
+    if ((volts - maxVolt) > motorThreshold or (minVolt - volts) > motorThreshold) {
+        if ((volts - maxVolt) > motorThreshold) {
             Serial.println(" TOO TOO LOUD");
-            if (isLouderThanBefore) { //if louder than before AND still too loud, need to move in opposite direction
-              digitalWrite(dirPin, LOW);
-            } else {  //if softer than before AND too loud, getting closer! move in same direction
-              digitalWrite(dirPin, HIGH); 
-            }    
+            digitalWrite(dirPin, HIGH);     
          } else {
             Serial.println(" TOO TOO SOFT");
-            if (isLouderThanBefore) { //if louder than before AND too soft, getting closer! move in same direction
-              digitalWrite(dirPin, LOW);
-            } else {  //if softer than before AND still too soft, need to move in opposite direction
-              digitalWrite(dirPin, LOW);
-            }
+            digitalWrite(dirPin, LOW);   
         } 
         delay(100);
-        for (int i = 0; i < 1024; i++) {   
+        for (int i = 0; i < 2048; i++) {   
             digitalWrite(stepPin, LOW);  // This LOW to HIGH change is what creates the
             digitalWrite(stepPin, HIGH); // "Rising Edge" so the easydriver knows to when to step.
             delayMicroseconds(500);      // This delay time is close to top speed for this
@@ -74,13 +60,14 @@ void loop() {
     } else if (volts > maxVolt or volts < minVolt) {
         if (volts > maxVolt) {
           Serial.println(" TOO LOUD");
-          //myservo.write(servoPos+1);
+          servo.write(servoAngle-5);
         } else {
           Serial.println(" TOO SOFT");
-          //myservo.write(servoPos-1);
+          servo.write(servoAngle+5);
         }
     } else {
       Serial.println("VOLUME IN RANGE");
     }
-    oldVolts = volts;
+    servo.write(servoAngle);
+    Serial.println(servoAngle);
 }
