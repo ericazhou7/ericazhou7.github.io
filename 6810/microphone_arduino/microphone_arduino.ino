@@ -12,7 +12,7 @@ unsigned int sample;
 //stepper constants
 int dirPin = 2;
 int stepPin = 4;
-float stepperThreshold = 5.2;
+float stepperThreshold = 00;
 int stepperDir = LOW; //up
 
 //servo constants
@@ -103,6 +103,6 @@ void loop() {
       Serial.println("VOLUME IN RANGE");
     }
     oldVolts = volts;
-    servo.write(servoAngle);
-    Serial.println(servoAngle);
+    servo.write(servoAngle);   
+    Serial.println(servoAngle); 
 }
