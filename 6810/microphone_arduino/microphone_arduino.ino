@@ -4,6 +4,7 @@
 int micPin = 0;
 float minVolt = 0.5;
 float maxVolt = 1.7;
+float silentThreshold = .5;
 double volts;
 double oldVolts;
 const int sampleWindow = 1000; // Sample window width in mS (50 mS = 20Hz)
@@ -12,7 +13,7 @@ unsigned int sample;
 //stepper constants
 int dirPin = 2;
 int stepPin = 4;
-float stepperThreshold = 5.2;
+float stepperThreshold = 1.0;
 int stepperDir = LOW; //up
 
 //servo constants
@@ -54,7 +55,7 @@ void loop() {
     }
     
     boolean isLouderThanBefore = (oldVolts - volts) > 0.05;
-    boolean notSilent = volts > 0.05;
+    boolean notSilent = volts > silentThreshold;
     Serial.print(volts);
     
     if ((volts - maxVolt) > stepperThreshold or ((minVolt - volts) > stepperThreshold) && notSilent) {
@@ -81,14 +82,12 @@ void loop() {
         if (volts > maxVolt) {
           Serial.println(" TOO LOUD");
           if (isLouderThanBefore) { //change direction
-             if (servoDir == 1) { servoDir = -1;}
-             else {servoDir = 1;}
+             servoDir = changeServoDir(servoDir);
           }
         } else {
           Serial.println(" TOO SOFT");
           if (!isLouderThanBefore) { //change direction
-             if (servoDir == 1) { servoDir = -1;}
-             else {servoDir = 1;}
+             servoDir = changeServoDir(servoDir);
           }
         }
         if (servoDir == 1) {
@@ -104,5 +103,12 @@ void loop() {
     }
     oldVolts = volts;
     servo.write(servoAngle);
-    Serial.println(servoAngle);
+}
+
+int changeServoDir(int servoDir) {
+  if (servoDir == 1) {
+      servoDir = -1;
+  } else {
+      servoDir = 1;
+  }
 }
