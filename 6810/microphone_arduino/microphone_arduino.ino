@@ -14,13 +14,13 @@ unsigned int sample;
 int dirPin = 2;
 int stepPin = 4;
 float stepperThreshold = 1.0;
-int stepperDir = LOW; //up
+int stepperDir = HIGH; //up
 
 //servo constants
 int servoPin = 5;
 Servo servo; 
 int servoDir = 1; //up
-int servoAngle = 155;
+int servoAngle = 95;
 int servoMin = 95;
 int servoMax = 155;
 
@@ -106,6 +106,7 @@ void loop() {
     }
     oldVolts = volts;
     servo.write(servoAngle);
+    Serial.println(servoAngle);
 }
 
 
