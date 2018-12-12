@@ -2,8 +2,8 @@
 
 //microphone constants
 int micPin = 0;
-float minVolt = 0.5;
-float maxVolt = 1.7;
+float minVolt = 0.7;
+float maxVolt = 2.0;
 float silentThreshold = .5;
 double volts;
 double oldVolts;
@@ -48,26 +48,27 @@ void loop() {
         }
       }
     }
+    
     peakToPeak = signalMax - signalMin; // max - min = peak-peak amplitude
     volts = (peakToPeak * 5.0) / 1024; // convert to volts
     if (oldVolts == NULL) {
       oldVolts = volts;
     }
     
-    boolean isLouderThanBefore = (oldVolts - volts) > 0.05;
+    boolean isLouderThanBefore = (volts - oldVolts) > 0.05;
     boolean notSilent = volts > silentThreshold;
     Serial.print(volts);
     
-    if ((volts - maxVolt) > stepperThreshold or ((minVolt - volts) > stepperThreshold) && notSilent) {
+    if (((volts - maxVolt) > stepperThreshold or ((minVolt - volts) > stepperThreshold)) && notSilent) {
       if ((volts - maxVolt) > stepperThreshold) { //also need to be checking the difference between the old reading and new one
         Serial.println(" TOO TOO LOUD");
         if (isLouderThanBefore) { //if louder than before AND still too loud, need to move in opposite direction
-          stepperDir = (stepperDir == 0);
+          stepperDir = changeStepperDir(stepperDir);
         } 
       } else {
         Serial.println(" TOO TOO SOFT");
         if (!isLouderThanBefore) { //if softer than before AND still too soft, need to move in opposite direction
-           stepperDir = (stepperDir == 0);
+           stepperDir = changeStepperDir(stepperDir);
         }
       } 
       digitalWrite(dirPin, stepperDir);
@@ -78,7 +79,7 @@ void loop() {
           digitalWrite(stepPin, HIGH); // "Rising Edge" so the easydriver knows to when to step.
           delayMicroseconds(500);      // This delay time is close to top speed for this
       }                              // particular motor. Any faster the motor stalls.
-    } else if (volts > maxVolt or volts < minVolt) {
+    } else if (((volts > maxVolt) or (volts < minVolt)) && notSilent) {
         if (volts > maxVolt) {
           Serial.println(" TOO LOUD");
           if (isLouderThanBefore) { //change direction
@@ -98,12 +99,15 @@ void loop() {
           servoAngle = min(servoAngle, servoMax);
         }
         servo.write(servoAngle);
-    } else {
+    } else if (notSilent) {
       Serial.println("VOLUME IN RANGE");
+    } else {
+      Serial.println("NO SPEECH");
     }
     oldVolts = volts;
     servo.write(servoAngle);
 }
+
 
 int changeServoDir(int servoDir) {
   if (servoDir == 1) {
@@ -111,5 +115,12 @@ int changeServoDir(int servoDir) {
   } else {
       servoDir = 1;
   }
+}
 
+int changeStepperDir(int stepperDir) {
+  if (stepperDir == 1) {
+      stepperDir = 0;
+  } else {
+      stepperDir = 1;
+  }
 }
