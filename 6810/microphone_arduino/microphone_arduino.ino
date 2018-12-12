@@ -2,9 +2,9 @@
 
 //microphone constants
 int micPin = 0;
-float minVolt = 0.7;
-float maxVolt = 2.0;
-float silentThreshold = .5;
+float minVolt = 1.2;
+float maxVolt = 2.7;
+float silentThreshold = 1.0;
 double volts;
 double oldVolts;
 const int sampleWindow = 1000; // Sample window width in mS (50 mS = 20Hz)
