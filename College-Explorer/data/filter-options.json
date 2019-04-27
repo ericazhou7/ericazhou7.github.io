@@ -1,0 +1,51 @@
+{
+  "region": {
+    "id": "region",
+    "name": "Region",
+    "type": "general",
+    "options": [
+      {
+        "id": "region-n",
+        "name": "Northeast",
+        "value": "1.0"
+      },
+      {
+        "id": "region-m",
+        "name": "Midwest",
+        "value": "2.0"
+      },
+      {
+        "id": "region-s",
+        "name": "South",
+        "value": "3.0"
+      },
+      {
+        "id": "region-w",
+        "name": "West",
+        "value": "4.0"
+      }
+    ]
+  },
+  "type": {
+    "id": "type",
+    "name": "Type",
+    "type": "general",
+    "options": [
+      {
+        "id": "type-pu",
+        "name": "Public",
+        "value": "1.0"
+      },
+      {
+        "id": "type-np",
+        "name": "Private Non-profit",
+        "value": "2.0"
+      },
+      {
+        "id": "type-fp",
+        "name": "Private For-profit",
+        "value": "3.0"
+      }
+    ]
+  }
+}

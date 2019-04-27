@@ -1,0 +1,44 @@
+{
+  "enrollment": {
+    "id": "enrollment",
+    "name": "Size",
+    "type": "general",
+    "min": 57,
+    "max": 50000
+  },
+  "price": {
+    "id": "price",
+    "name": "Sticker Price",
+    "type": "general",
+    "min": 1104,
+    "max": 51008
+  },
+  "netprice": {
+    "id": "netprice",
+    "name": "Net Price (Lowest 20%)",
+    "type": "general",
+    "min": -1071,
+    "max": 41445
+  },
+  "sat": {
+    "id": "sat",
+    "name": "SAT Score",
+    "type": "general",
+    "min": 727.5,
+    "max": 1550
+  },
+  "female": {
+    "id": "female",
+    "name": "% Female",
+    "type": "general",
+    "min": 0.003306,
+    "max": 1.0
+  },
+  "grad": {
+    "id": "grad",
+    "name": "Graduation Rate",
+    "type": "general",
+    "min": 0.020202,
+    "max": 1.000000
+  }
+}

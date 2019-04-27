@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+h1 {
+  color: black;
+}
+
+path:hover {
+  cursor: pointer;
+}
+
+body {
+  font: 15px sans-serif;
+  font-family: 'Lato', sans-serif;
+  color: #222222;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+#filters {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  min-width: 170px;
+}
+
+.filter-button {
+  border: 5px solid #222222;
+  padding: 10px;
+  margin-bottom: 15px;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+}
+
+.filter-button:hover {
+  cursor: pointer;
+}
+
+.filter-button.active {
+  border: 5px solid #ffdf00;
+}
+
+#filter-space {
+  margin-top: 50px;
+  text-align: center;
+  background-color: #EEE;
+  padding: 10px;
+
+  svg {
+    margin: 0 auto;
+  }
+}
+
+.filter-option {
+  border: 1px solid #222222;
+  padding: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.filter-option.active {
+  background-color: blue;
+  color: white;
+}
+
+#weight-sliders {
+  padding: 20px;
+}
+
+#results-container {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+#results {
+  max-width: 500px;
+  max-height: 600px;
+  overflow-y: scroll;
+  /* border: 1px solid #222; */
+}
+
+.college-entry {
+  padding: 15px;
+  border-top: 1px solid #222;
+  overflow: hidden;
+}
+
+.college-entry img {
+  height: 30px;
+  float: left;
+  margin-right: 15px;
+}
+
+.college-entry:hover {
+  cursor: pointer;
+  background-color: #EEE;
+}
+
+.college-descr {
+  float: left;
+}
+
+.college-title {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.college-subtitle {
+  font-size: 12px;
+  color: #666666;
+  padding-top: 10px;
+  padding-left: 20px;
+}
+
+.college-subtitle span {
+  margin-right: 20px;
+}
+
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 60px;
+    height: 28px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+#school-details img {
+  height: 300px;
+}
+
+.selected-entry {
+  background-color: rgba(255, 223, 0, 0.5);
+}
