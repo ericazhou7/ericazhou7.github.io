@@ -22,11 +22,11 @@ body {
   flex-direction: row;
 }
 
-#filters {
-  margin-left: 20px;
-  margin-right: 20px;
+#features {
+  margin-left: 10px;
+  margin-right: 10px;
   margin-bottom: 20px;
-  min-width: 170px;
+  min-width: 190px;
 }
 
 .filter-button {
@@ -78,11 +78,22 @@ body {
   margin-right: 50px;
 }
 
+#search-bar {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+#search-input {
+  width: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 15px;
+}
+
 #results {
   max-width: 500px;
   max-height: 600px;
   overflow-y: scroll;
-  /* border: 1px solid #222; */
 }
 
 .college-entry {
@@ -100,6 +111,44 @@ body {
 .college-entry:hover {
   cursor: pointer;
   background-color: #EEE;
+}
+
+.icon {
+  float: right;
+}
+
+#dropdown, #dropdown-menu {
+  width: 200px;
+}
+
+#dropdown-button {
+  border: 1px solid #222;
+  padding: 15px;
+}
+
+#dropdown-button:hover {
+  cursor: pointer;
+}
+
+#dropdown:hover #dropdown-menu {
+  display: block;
+  cursor: pointer;
+}
+
+#dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #EEE;
+  z-index: 1;
+}
+
+.dropdown-menu-entry {
+  padding: 15px;
+  border: 1px solid #222;
+}
+
+.dropdown-menu-entry:hover {
+  background-color: #ffdf00;
 }
 
 .college-descr {
@@ -122,23 +171,55 @@ body {
   margin-right: 20px;
 }
 
+.website:hover {
+  cursor: pointer;
+}
+
 div.tooltip {
     position: absolute;
     text-align: center;
-    width: 60px;
-    height: 28px;
-    padding: 2px;
+    width: 120px;
+    padding: 10px 5px;
     font: 12px sans-serif;
-    background: lightsteelblue;
+    background: blue;
+    color: white;
     border: 0px;
     border-radius: 8px;
     pointer-events: none;
+}
+
+#school-details {
+  padding: 30px 0 80px;
+  overflow: hidden;
+}
+
+#school-details tr {
+  padding: 20px;
+}
+
+#school-details th {
+  text-align: right;
+  padding-right: 10px;
 }
 
 #school-details img {
   height: 300px;
 }
 
+#details-table, .chart {
+  float: left;
+  padding: 0px 40px 20px;
+}
+
+.chart h3 {
+  text-align: center;
+}
+
 .selected-entry {
   background-color: rgba(255, 223, 0, 0.5);
+}
+
+#pie-chart {
+  width: 100%;
+  height: 450px;
 }

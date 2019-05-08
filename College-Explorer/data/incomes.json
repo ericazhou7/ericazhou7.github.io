@@ -1,0 +1,37 @@
+{
+  "q5": {
+    "id": 5,
+    "name": "Income Quintile 5",
+    "type": "general",
+    "min": 0,
+    "max": 19800
+  },
+  "q4": {
+    "id": 4,
+    "name": "Income Quintile 4",
+    "type": "general",
+    "min": 19800,
+    "max": 37300
+  },
+  "q3": {
+    "id": 3,
+    "name": "Income Quintile 3",
+    "type": "general",
+    "min": 37300,
+    "max": 65300
+  },
+  "q2": {
+    "id": 2,
+    "name": "Income Quintile 2",
+    "type": "general",
+    "min": 65300,
+    "max": 110200
+  },
+  "q1": {
+    "id": 1,
+    "name": "Income Quintile 1",
+    "type": "general",
+    "min": 110200,
+    "max": 14760800
+  }
+}
