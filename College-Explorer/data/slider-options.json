@@ -27,6 +27,13 @@
     "min": 727.5,
     "max": 1550
   },
+  "acceptance": {
+    "id": "acceptance",
+    "name": "Acceptance Rate",
+    "type": "general",
+    "min": 0,
+    "max": 1
+  },
   "female": {
     "id": "female",
     "name": "% Female",
